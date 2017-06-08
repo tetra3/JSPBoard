@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.javalec.spring_mybatis.dao.IDao">
+	<select id="listDao" resultType="com.javalec.spring_mybatis.dto.ContentDto">
+			SELECT BID, BNAME, BTITLE, BCONTENT, BDATE, BHIT, BGROUP, BSTEP, BINDENT FROM MVC_BOARD ORDER BY BGROUP DESC, BSTEP ASC
+	</select>
+	
+	<select id="loginconfirmDao" resultType="Map">
+		SELECT * FROM BOARDMEMBER WHERE LID = #{param1}
+	</select>
+	
+	<select id="contentView" resultType="com.javalec.spring_mybatis.dto.ContentDto">
+		SELECT * FROM MVC_BOARD WHERE BID = #{param1}
+	</select>
+	
+	<select id="replyViewDao" resultType="com.javalec.spring_mybatis.dto.ContentDto">
+		SELECT * FROM MVC_BOARD WHERE BID = #{param1}
+	</select>
+	
+	<insert id="replyDao">
+		INSERT INTO MVC_BOARD (BID, BNAME, BTITLE, BCONTENT, BGROUP, BSTEP, BINDENT) VALUES (MVC_BOARD_SEQ.NEXTVAL, #{param1}, #{param2} , #{param3}, #{param4}, #{param5}, #{param6})
+	</insert>
+	
+	<insert id="singupDao">
+		INSERT INTO BOARDMEMBER (LNAME, LID, LPASSWORD) VALUES (#{param1},#{param2},#{param3})
+	</insert>
+	
+	<insert id="writeDao">
+		INSERT INTO MVC_BOARD (BID, BNAME, BTITLE, BCONTENT, BHIT, BGROUP, BSTEP, BINDENT) VALUES (MVC_BOARD_SEQ.NEXTVAL, #{param1}, #{param2}, #{param3}, 0, MVC_BOARD_SEQ.CURRVAL, 0, 0 )
+	</insert>
+	
+	<update id="modifyDao">
+		UPDATE MVC_BOARD SET BTITLE = #{param2}, BCONTENT = #{param3} WHERE BID = #{param1}
+	</update>
+	
+	<update id="upHit">
+		UPDATE MVC_BOARD SET BHIT = BHIT + 1 WHERE BID = #{param1}
+	</update>	
+	
+	<delete id="deleteDao">
+		DELETE FROM MVC_BOARD WHERE BID = #{param1}
+	</delete>
+	
+	
+</mapper>
